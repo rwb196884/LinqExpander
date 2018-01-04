@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace LinqExpander
 {
-	internal class ExtendableQueryProvider : IQueryProvider
+	internal class ExtendableQueryProvider : IAsyncQueryProvider
 	{
-		IQueryProvider _underlyingQueryProvider;
+	    private readonly IQueryProvider _underlyingQueryProvider;
 
 		private ExtendableQueryProvider()
 		{
@@ -51,12 +54,22 @@ namespace LinqExpander
 			return _underlyingQueryProvider.Execute(Visit(expression));
 		}
 
-		private Expression Visit(Expression exp)
-		{
-			ExpandableVisitor vstr = new ExpandableVisitor(_underlyingQueryProvider);
-			Expression visitedExp = vstr.Visit(exp);
+	    public IAsyncEnumerable<TResult> ExecuteAsync<TResult>(Expression expression)
+	    {
+	        return ((IAsyncQueryProvider)_underlyingQueryProvider).ExecuteAsync<TResult>(Visit(expression));
+	    }
 
-			return visitedExp;
-		}
-	}
+	    public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
+	    {
+	        return ((IAsyncQueryProvider)_underlyingQueryProvider).ExecuteAsync<TResult>(Visit(expression), cancellationToken);
+	    }
+
+	    private Expression Visit(Expression exp)
+	    {
+	        ExpandableVisitor vstr = new ExpandableVisitor(_underlyingQueryProvider);
+	        Expression visitedExp = vstr.Visit(exp);
+
+	        return visitedExp;
+	    }
+    }
 }

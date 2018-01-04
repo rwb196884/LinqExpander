@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace LinqExpander
 {
@@ -30,16 +31,30 @@ namespace LinqExpander
 				}
 				return Visit(((IQueryable)node.Method.Invoke(null, args)).Expression);
 			}
-			var replaceNodeAttributes = node.Method.GetCustomAttributes(typeof(ReplaceWithExpressionAttribute), false).Cast<ReplaceWithExpressionAttribute>();
-			if (replaceNodeAttributes.Any() && node.Method.IsStatic)
+			var replaceNodeAttribute = node.Method.GetCustomAttributes(typeof(ReplaceWithExpressionAttribute), false).Cast<ReplaceWithExpressionAttribute>().FirstOrDefault();
+			if (replaceNodeAttribute != null && node.Method.IsStatic)
 			{
-				var replaceWith = node.Method.DeclaringType.GetMethod(replaceNodeAttributes.First().MethodName).Invoke(null, null);
-				if (replaceWith is LambdaExpression)
-				{
-					RegisterReplacementParameters(node.Arguments.ToArray(), replaceWith as LambdaExpression);
-					return Visit((replaceWith as LambdaExpression).Body);
-				}
-			}
+			    if (!string.IsNullOrEmpty(replaceNodeAttribute.MethodName))
+			    {
+			        var methods = node.Method.DeclaringType.GetRuntimeMethods();
+			        var replaceWith = methods.First(x => x.Name == replaceNodeAttribute.MethodName).Invoke(null, null);
+			        if (replaceWith is LambdaExpression)
+			        {
+			            RegisterReplacementParameters(node.Arguments.ToArray(), replaceWith as LambdaExpression);
+			            return Visit((replaceWith as LambdaExpression).Body);
+			        }
+			    }
+			    if (!string.IsNullOrEmpty(replaceNodeAttribute.PropertyName))
+			    {
+			        var properties = node.Method.DeclaringType.GetRuntimeProperties();
+			        var replaceWith = properties.First(x => x.Name == replaceNodeAttribute.PropertyName).GetValue(null);
+			        if (replaceWith is LambdaExpression)
+			        {
+			            RegisterReplacementParameters(node.Arguments.ToArray(), replaceWith as LambdaExpression);
+			            return Visit((replaceWith as LambdaExpression).Body);
+			        }
+                }
+            }
 			return base.VisitMethodCall(node);
 		}
 		protected override Expression VisitParameter(ParameterExpression node)

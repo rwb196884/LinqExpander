@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExpander", "LinqExpander\LinqExpander.csproj", "{629A0BE0-E5C5-4386-8DE9-39313503CE3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExpander", "LinqExpander\LinqExpander.csproj", "{70BC7835-25E4-4325-9B16-914E94BD5075}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{629A0BE0-E5C5-4386-8DE9-39313503CE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{629A0BE0-E5C5-4386-8DE9-39313503CE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{629A0BE0-E5C5-4386-8DE9-39313503CE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{629A0BE0-E5C5-4386-8DE9-39313503CE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70BC7835-25E4-4325-9B16-914E94BD5075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70BC7835-25E4-4325-9B16-914E94BD5075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70BC7835-25E4-4325-9B16-914E94BD5075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70BC7835-25E4-4325-9B16-914E94BD5075}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D339344-B90C-4E1A-854F-421E227C4850}
 	EndGlobalSection
 EndGlobal

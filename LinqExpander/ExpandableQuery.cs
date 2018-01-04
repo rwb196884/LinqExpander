@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace LinqExpander
 {
-	internal class ExpandableQuery<T> : IQueryable<T>, IOrderedQueryable<T>
-	{
-		ExtendableQueryProvider _provider;
-		Expression _expression;
+	internal class ExpandableQuery<T> : IQueryable<T>, IOrderedQueryable<T>, IAsyncEnumerable<T>
+    {
+		private readonly ExtendableQueryProvider _provider;
+        private readonly Expression _expression;
 
 		public ExpandableQuery(ExtendableQueryProvider provider, Expression expression)
 		{
@@ -21,33 +23,20 @@ namespace LinqExpander
 			return _provider.ExecuteQuery<T>(_expression).GetEnumerator();
 		}
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetEnumerator()
+        {
+            return _provider.ExecuteAsync<T>(_expression).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
 
-		public Type ElementType
-		{
-			get
-			{
-				return typeof(T);
-			}
-		}
+        public Type ElementType => typeof(T);
 
-		public Expression Expression
-		{
-			get
-			{
-				return _expression;
-			}
-		}
+        public Expression Expression => _expression;
 
-		public IQueryProvider Provider
-		{
-			get
-			{
-				return _provider;
-			}
-		}
-	}
+        public IQueryProvider Provider => _provider;
+    }
 }
