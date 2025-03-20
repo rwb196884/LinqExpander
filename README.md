@@ -7,7 +7,7 @@ Originally by Luke McGregor https://github.com/lukemcgregor/LinqExpander
 Ported to `netstandard` by Ben Cull https://github.com/bjcull/LinqExpander
 See also: https://bencull.com/blog/expression-projection-magic-entity-framework-core
 
-Updated EntityFramework pacakge and compile `` to net4 for legacy software to version 9 by Richard Barraclough https://github.com/rwb196884/LinqExpander
+Updated EntityFramework pacakge to version 9 and compile `ReplaceWithExpressionAttribute` to net4 for legacy software by Richard Barraclough https://github.com/rwb196884/LinqExpander
 
 # Why two projects?
 
@@ -17,7 +17,4 @@ The new stuff that contains the actual implementation depends on `Microsoft.Enti
 
 # Usage
 
-On your model class:
-```
-
-```
+...
