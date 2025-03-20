@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RuntimeIdentifiers>any</RuntimeIdentifiers>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LanguageVersion>6</LanguageVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <IsPackable>true</IsPackable>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Luke McGregor, Ben Cull, Richard Barraclough</Authors>
+    <Product>LinqExpander</Product>
+    <Description>A way of expanding extension methods in your LINQ expressions so that it can be interperated by a third party who doesn't understand your extensions.</Description>
+    <Copyright>Luke McGregor (originally); MIT license.</Copyright>
+    <PackageProjectUrl>https://github.com/rwb196884/LinqExpander</PackageProjectUrl>
+    <PackageLicenseFile>https://raw.githubusercontent.com/lukemcgregor/LinqExpander/master/LICENSE</PackageLicenseFile>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="packages.lock.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LinqExpander\LinqExpander.csproj" />
+  </ItemGroup>
+
+</Project>
